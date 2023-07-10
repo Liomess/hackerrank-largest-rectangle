@@ -1,0 +1,35 @@
+def largestRectangle(h):
+    n=len(h)
+    right=[n]*n
+    last=n-1
+    stack=[]
+    stack.append([h[last],last])
+    last-=1
+    while last>=0:
+        while stack!=[] and h[last]<=stack[-1][0]:
+            stack.pop()
+        if stack==[]:
+            right[last]=n
+        else:
+            right[last]=stack[-1][1]
+        stack.append([h[last],last])
+        last-=1
+    left=[-1]*n
+    start=0
+    stack=[]
+    stack.append([h[start],start])
+    start+=1
+    while start<n:
+        while stack!=[] and h[start]<=stack[-1][0]:
+            stack.pop()
+        if stack==[]:
+            left[start]=-1
+        else:
+            left[start]=stack[-1][1]
+        stack.append([h[start],start])
+        start+=1
+    maxx=float('-inf')
+    for i in range(n):
+        ar=h[i]*(right[i]-left[i]-1)
+        maxx=max(maxx,ar)
+    return maxx
